@@ -1,0 +1,27 @@
+-- Структура базы данных vyazanie.db (SQLite)
+CREATE TABLE IF NOT EXISTS categories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE);
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    is_admin INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS patterns (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    summary TEXT NOT NULL DEFAULT '',
+    level TEXT NOT NULL DEFAULT 'Новичок',
+    hours INTEGER NOT NULL DEFAULT 3,
+    materials TEXT NOT NULL DEFAULT '',
+    steps TEXT NOT NULL DEFAULT '',
+    category_id INTEGER REFERENCES categories(id),
+    image TEXT,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS favorites (
+    user_id INTEGER NOT NULL, pattern_id INTEGER NOT NULL,
+    PRIMARY KEY (user_id, pattern_id));
+CREATE TABLE IF NOT EXISTS comments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    pattern_id INTEGER NOT NULL, user_id INTEGER NOT NULL,
+    text TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
