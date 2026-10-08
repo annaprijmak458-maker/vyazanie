@@ -1,0 +1,53 @@
+:root{--bg:#f2f0f8;--ink:#25223a;--muted:#6b6786;--card:#fff;--pink:#e5557a;--mint:#6fcfb3;--sun:#f2b544;--line:#dcd8ec}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Nunito,system-ui,sans-serif}
+h1,h2,.logo{font-family:Comfortaa,Nunito,sans-serif;line-height:1.2}
+.top{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;padding:1rem clamp(1rem,5vw,3rem);border-bottom:3px dashed var(--pink)}
+.logo{font-size:1.8rem;font-weight:700;color:var(--pink);text-decoration:none}
+nav{display:flex;gap:1.2rem}
+a{color:var(--ink)}
+main{max-width:1000px;margin:0 auto;padding:2rem clamp(1rem,5vw,2rem) 4rem}
+.filters{display:flex;gap:.6rem;flex-wrap:wrap;margin:1.2rem 0 2rem}
+input,select,textarea{font:inherit;padding:.6rem .8rem;border:2px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);max-width:100%}
+.filters input{flex:1 1 220px}
+button,.btn{font:inherit;font-weight:700;padding:.6rem 1.2rem;border:0;border-radius:999px;background:var(--pink);color:#fff;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.danger{background:var(--ink)}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem}
+.card{background:var(--card);border-radius:18px;border-left:10px solid var(--mint)}
+.card.lvl-1{border-color:var(--sun)}.card.lvl-2{border-color:var(--pink)}
+.card a{display:block;padding:1.2rem 1.3rem;text-decoration:none;height:100%}
+.card h2{margin:0 0 .4rem;font-size:1.25rem}
+.card p{margin:0 0 .8rem;color:var(--muted)}
+.meta{color:var(--muted);font-weight:600;font-size:.95rem}
+.card:hover{box-shadow:0 6px 0 var(--line)}
+.pattern{background:var(--card);border-radius:18px;padding:clamp(1.2rem,4vw,2.4rem)}
+.pattern h2{margin-top:2rem}
+.back{font-size:.95rem}
+.steps li,.mats li{margin:.4rem 0}
+.steps li::marker{color:var(--pink);font-weight:700}
+.actions{display:flex;gap:.8rem;margin-top:2rem}
+.edit{display:grid;gap:1rem;max-width:640px}
+.edit.narrow{max-width:360px}
+.edit label{display:grid;gap:.3rem;font-weight:600}
+.row{display:flex;gap:1rem;flex-wrap:wrap}
+.note{background:var(--sun);padding:.7rem 1rem;border-radius:10px;font-weight:600}
+.empty{color:var(--muted)}
+
+/* v2: видео-фон, фото, категории, комментарии */
+body{background:linear-gradient(160deg,#f7d9e3,#d8f0ea 60%,#f8edc8);background-attachment:fixed}
+.bg{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1}
+@media (prefers-reduced-motion:reduce){.bg{display:none}}
+.top{background:rgba(242,240,248,.94)}
+nav{flex-wrap:wrap}
+main{background:rgba(242,240,248,.94);border-radius:24px;margin:1.5rem auto 2rem}
+footer{text-align:center;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6);padding-bottom:2rem}
+.thumb{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;margin-bottom:.8rem}
+.hero{width:100%;max-height:420px;object-fit:cover;border-radius:14px}
+.chips{display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem 0}
+.chip{padding:.35rem .9rem;border-radius:999px;background:#fff;border:2px solid var(--line);text-decoration:none;font-weight:600}
+.chip.on{background:var(--pink);border-color:var(--pink);color:#fff}
+.btn.on{background:var(--mint);color:var(--ink)}
+.comment{border-top:2px dashed var(--line);padding:.6rem 0}
+.comment p{margin:.3rem 0}
+button.link{background:none;color:var(--muted);padding:0;font-weight:600;text-decoration:underline}
