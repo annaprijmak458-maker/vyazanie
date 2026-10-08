@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ title or 'Схемы вязаных игрушек' }}</h1>
+{% if not title %}
+<div class="chips">
+  <a class="chip {{ 'on' if not cat }}" href="{{ url_for('index') }}">Все</a>
+  {% for c in categories %}<a class="chip {{ 'on' if cat == c.id }}" href="{{ url_for('index', cat=c.id) }}">{{ c.name }}</a>{% endfor %}
+</div>
+<form class="filters" method="get">
+  {% if cat %}<input type="hidden" name="cat" value="{{ cat }}">{% endif %}
+  <input type="search" name="q" value="{{ q }}" placeholder="Название или материал">
+  <select name="level">
+    <option value="">Любой уровень</option>
+    {% for l in levels %}<option {{ 'selected' if l == level }}>{{ l }}</option>{% endfor %}
+  </select>
+  <button>Найти</button>
+</form>
+{% endif %}
+{% if items %}
+<ul class="grid">
+  {% for p in items %}
+  <li class="card lvl-{{ levels.index(p.level) if p.level in levels else 0 }}">
+    <a href="{{ url_for('pattern', pid=p.id) }}">
+      {% if p.image %}<img class="thumb" src="{{ url_for('static', filename='uploads/' ~ p.image) }}" alt="{{ p.title }}">{% endif %}
+      <h2>{{ p.title }}</h2>
+      <p>{{ p.summary }}</p>
+      <span class="meta">{{ p.cat or 'Без категории' }}, {{ p.level }}, около {{ p.hours }} ч</span>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="empty">{{ 'Пока здесь пусто. Откройте схему и нажмите «В избранное».' if title else 'Ничего не нашлось. Попробуйте другое слово или сбросьте фильтры.' }}</p>
+{% endif %}
+{% endblock %}

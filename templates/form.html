@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ action }}</h1>
+<form method="post" class="edit" enctype="multipart/form-data">
+  <label>Название <input name="title" value="{{ p.title or '' }}" required></label>
+  <label>Коротко о схеме <textarea name="summary" rows="2">{{ p.summary or '' }}</textarea></label>
+  <div class="row">
+    <label>Категория
+      <select name="category_id">{% for c in categories %}<option value="{{ c.id }}" {{ 'selected' if p.category_id|string == c.id|string }}>{{ c.name }}</option>{% endfor %}</select>
+    </label>
+    <label>Уровень
+      <select name="level">{% for l in levels %}<option {{ 'selected' if p.level == l }}>{{ l }}</option>{% endfor %}</select>
+    </label>
+    <label>Часов работы <input type="number" min="1" name="hours" value="{{ p.hours or 3 }}"></label>
+  </div>
+  <label>Фото (jpg, png, webp, gif до 5 МБ) <input type="file" name="image" accept="image/*"></label>
+  <label>Материалы (каждый с новой строки) <textarea name="materials" rows="5">{{ p.materials or '' }}</textarea></label>
+  <label>Шаги (каждый с новой строки) <textarea name="steps" rows="8">{{ p.steps or '' }}</textarea></label>
+  <button class="btn">{{ action }}</button>
+</form>
+{% endblock %}

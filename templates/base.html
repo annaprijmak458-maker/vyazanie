@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Клубок — схемы вязаных игрушек{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<video class="bg" autoplay muted loop playsinline aria-hidden="true">
+  <source src="{{ url_for('static', filename='bg.mp4') }}" type="video/mp4">
+</video>
+<header class="top">
+  <a class="logo" href="{{ url_for('index') }}">Клубок</a>
+  <nav>
+    <a href="{{ url_for('index') }}">Схемы</a>
+    <a href="{{ url_for('basics') }}">Азы вязания</a>
+    <a href="{{ url_for('about') }}">О сайте</a>
+    <a href="{{ url_for('contacts') }}">Контакты</a>
+    {% if user %}
+      <a href="{{ url_for('favorites') }}">Избранное</a>
+      {% if user.is_admin %}<a href="{{ url_for('new') }}">Добавить схему</a>{% endif %}
+      <a href="{{ url_for('logout') }}">Выйти ({{ user.username }})</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">Войти</a>
+      <a href="{{ url_for('register') }}">Регистрация</a>
+    {% endif %}
+  </nav>
+</header>
+<main>
+  {% for m in get_flashed_messages() %}<p class="note">{{ m }}</p>{% endfor %}
+  {% block content %}{% endblock %}
+</main>
+<footer>Клубок, учебный проект</footer>
+</body>
+</html>

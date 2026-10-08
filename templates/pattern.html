@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}{{ p.title }} — Клубок{% endblock %}
+{% block content %}
+<article class="pattern">
+  <a class="back" href="{{ url_for('index') }}">Все схемы</a>
+  <h1>{{ p.title }}</h1>
+  {% if p.image %}<img class="hero" src="{{ url_for('static', filename='uploads/' ~ p.image) }}" alt="{{ p.title }}">{% endif %}
+  <p class="meta">{{ p.cat or 'Без категории' }}, {{ p.level }}, около {{ p.hours }} ч</p>
+  <p>{{ p.summary }}</p>
+  {% if user %}
+  <form method="post" action="{{ url_for('fav', pid=p.id) }}">
+    <button class="btn {{ 'on' if is_fav }}">{{ 'Убрать из избранного' if is_fav else 'В избранное' }}</button>
+  </form>
+  {% endif %}
+  <h2>Что понадобится</h2>
+  <ul class="mats">{% for m in p.materials|lines %}<li>{{ m }}</li>{% endfor %}</ul>
+  <h2>Как вязать</h2>
+  <ol class="steps">{% for s in p.steps|lines %}<li>{{ s }}</li>{% endfor %}</ol>
+  {% if user and user.is_admin %}
+  <div class="actions">
+    <a class="btn" href="{{ url_for('edit', pid=p.id) }}">Изменить</a>
+    <form method="post" action="{{ url_for('delete', pid=p.id) }}" onsubmit="return confirm('Удалить схему?')">
+      <button class="btn danger">Удалить</button>
+    </form>
+  </div>
+  {% endif %}
+  <h2 id="comments">Комментарии ({{ comments|length }})</h2>
+  {% for c in comments %}
+  <div class="comment">
+    <b>{{ c.username }}</b> <span class="meta">{{ c.created_at[:16] }}</span>
+    <p>{{ c.text }}</p>
+    {% if user and (user.id == c.user_id or user.is_admin) %}
+    <form method="post" action="{{ url_for('delete_comment', cid=c.id) }}"><button class="link">Удалить</button></form>
+    {% endif %}
+  </div>
+  {% else %}<p class="empty">Пока никто не писал. Будьте первым!</p>{% endfor %}
+  {% if user %}
+  <form method="post" action="{{ url_for('comment', pid=p.id) }}" class="edit">
+    <label>Ваш комментарий <textarea name="text" rows="3" maxlength="1000" required></textarea></label>
+    <button class="btn">Отправить</button>
+  </form>
+  {% else %}
+  <p><a href="{{ url_for('login', next=request.path) }}">Войдите</a> или <a href="{{ url_for('register') }}">зарегистрируйтесь</a>, чтобы писать комментарии и добавлять схемы в избранное.</p>
+  {% endif %}
+</article>
+{% endblock %}
